@@ -11,7 +11,7 @@ export default function Home() {
     status,
     displayModal,
 
-    setUser,
+    setUserObj,
     
     handleSearch,
     handlePaginate,
@@ -19,18 +19,10 @@ export default function Home() {
   } = useUsers()
   const { loader } = status
   
-  const dataSource = user.userArr?.map((user: UserObj) => {
-    return {
-      ...user,
-      id: user.id,
-      age: user.age,
-      email: user.email,
-      phone: user.phone,
-      lastName: user.lastName,
-      firstName: user.firstName,
-      name: `${user.firstName} ${user.lastName}`,
-    }
-  })
+  const dataSource = user.userArr?.map((user: UserObj) => ({
+    ...user,
+    name: `${user.firstName} ${user.lastName}`,
+  }));
 
   const columns = [
     {
@@ -75,11 +67,7 @@ export default function Home() {
           scroll={{ x: 'max-content' }}
           onRow={(record: UserObj) => ({
             onClick: () => {
-              console.log(record)
-              setUser(prev => ({
-                ...prev,
-                userObj: record
-              }));
+              setUserObj(record);
               handleToggleModal('userDetailsModal', true);
             },
           })}
@@ -92,10 +80,11 @@ export default function Home() {
           <Pagination
             showSizeChanger={false}
             total={user.totalUsers}
-            defaultPageSize={filter.recordsLimit}
+            current={filter.currentPage}
+            pageSize={filter.recordsLimit}
             onChange={handlePaginate}
           />
-        : ''
+        : null
       }
 
       <Modal
