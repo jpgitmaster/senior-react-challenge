@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import scss from '@/styles/Landing.module.scss';
 import useUsers from '@/custom_hooks/users/useUsers';
 import { Modal, Table, Spin, Pagination } from 'antd';
@@ -15,8 +16,10 @@ export default function Home() {
     
     handleSearch,
     handlePaginate,
-    handleToggleModal
+    handleToggleModal,
+    handleGenderFilter,
   } = useUsers()
+  
   const { loader } = status
   
   const dataSource = user.userArr?.map((user: UserObj) => ({
@@ -35,6 +38,34 @@ export default function Home() {
       dataIndex: 'age',
       key: 'age',
     },
+    {
+      title: 'Phone',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+      render: (key: string) => <span style={{textTransform: 'capitalize'}}>{key}</span>
+    },
+    {
+			key: 'id',
+			title: 'Action',
+			dataIndex: 'id',
+			fixed: 'right' as const,
+			align: 'center' as const,
+			render: (id: number) => (
+				<Link href={`/users/${id}`}>
+          View
+        </Link>
+			)
+    }
   ];
 
   return (
@@ -58,6 +89,19 @@ export default function Home() {
         onChange={handleSearch}
       />
 
+      {/* GENDER FILTER */}
+      <div className={scss.genderFilter}>
+        <label htmlFor="gender-filter">Filter by Gender: </label>
+        <select
+          id="gender-filter"
+          value={filter.filter.gender}
+          onChange={handleGenderFilter}
+        >
+          <option value="">All</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
       {/* TABLE COMPONENT */}
       <Table
           rowKey='id'
@@ -66,7 +110,12 @@ export default function Home() {
           dataSource={dataSource}
           scroll={{ x: 'max-content' }}
           onRow={(record: UserObj) => ({
-            onClick: () => {
+            className: scss.clickableRow,
+            onClick: (event) => {
+              // Avoid opening the modal when clicking on the "View" link
+              const cell = (event.target as HTMLElement).closest('td');
+              if (cell?.getAttribute('data-column-key') === 'id') return;
+
               setUserObj(record);
               handleToggleModal('userDetailsModal', true);
             },

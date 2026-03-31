@@ -16,7 +16,7 @@ const initStatus = {
 
 const initFilter = {
     search: '',
-    filter: {  },
+    filter: { gender: '' },
     currentPage: 1,
     recordsLimit: 10
 }

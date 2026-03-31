@@ -10,4 +10,32 @@
     .loader {
         @apply flex justify-center items-center fixed top-0 left-0 w-full h-full;
     }
+    .clickableRow{
+        @apply cursor-pointer;
+    }
+
+    .genderFilter{
+        @apply float-right -mt-10;
+        select{
+            @apply focus-visible:outline-none cursor-pointer;
+        }
+    }
+
+    // USER DETAILS
+    .backButton {
+        @apply mb-5 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded transition;
+    }
+
+    .userCard {
+        @apply w-150 mx-auto rounded-lg shadow-lg p-8 text-center;
+    }
+
+    .userName {
+        @apply text-2xl font-bold mb-5;
+        color: $blue; // custom color
+    }
+
+    .userInfo p {
+        @apply text-lg my-2 text-left;
+    }
 }
