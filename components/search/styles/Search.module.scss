@@ -1,0 +1,8 @@
+@reference 'tailwindcss';
+
+.searchComponent{
+    @apply w-80 mb-5;
+    input[type='text']{
+        @apply focus-visible:outline-none;
+    }
+}

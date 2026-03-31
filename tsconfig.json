@@ -14,7 +14,10 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/components/*": ["./components/*"],
+      "@/custom_hooks/*": ["./custom_hooks/*"]
     }
   },
   "include": [

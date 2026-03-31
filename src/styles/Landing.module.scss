@@ -1,0 +1,13 @@
+@use '@/styles/colors' as *;
+@reference 'tailwindcss';
+
+.app{
+    @apply p-10;
+    h1{
+        color: $blue;
+        @apply text-[25px] font-semibold;
+    }
+    .loader {
+        @apply flex justify-center items-center fixed top-0 left-0 w-full h-full;
+    }
+}
